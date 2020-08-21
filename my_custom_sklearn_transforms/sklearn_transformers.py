@@ -19,8 +19,8 @@ class DropColumns(BaseEstimator, TransformerMixin):
 class CreateDummies(BaseEstimator, TransformerMixin):
 
     def transform(self, X, **transformparams):
-        dum = pd.get_dummies(X).copy()
-        return pd.concat([df, dum], axis=1) 
+        dum = pd.get_dummies(X["PERFIL"]).copy()
+        return pd.concat([X, dum], axis=1) 
 
     def fit(self, X, y=None, **fitparams):
         return self
