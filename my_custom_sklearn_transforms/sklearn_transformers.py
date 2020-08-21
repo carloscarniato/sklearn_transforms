@@ -21,8 +21,7 @@ class OneHot(BaseEstimator, TransformerMixin):
         return self
     
     def transform(self, X):
-        # Primeiro realizamos a cópia do dataframe 'X' de entrada
         data = X.copy()
-        dum_df = pd.get_dummies(data, columns=["PERFIL"], prefix=["PERFIL"] )# merge with main df bridge_df on key values
-        # Retornamos um novo dataframe sem as colunas indesejadas
-        return data.merge(dum_df)
+        data['PERFIL_DUMMY'] = data['PERFIL']
+        dum_df = pd.get_dummies(data, columns=["PERFIL_DUMMY"], prefix=['PERFIL'])# merge with main df bridge_df on key values
+        return dum_df
