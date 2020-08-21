@@ -18,9 +18,20 @@ class DropColumns(BaseEstimator, TransformerMixin):
     
 class CreateDummies(BaseEstimator, TransformerMixin):
 
-    def transform(self, X, **transformparams):
-        dum = pd.get_dummies(X["PERFIL"].values).copy()
-        return pd.concat([X, dum], axis=1) 
-
-    def fit(self, X, y=None, **fitparams):
+    def __init__(self):
+        print('in the CabinFeatureTransformer init method: ')
+        
+    def fit(self, x, y=None):        
+        perfil_dummies = pd.get_dummies(x['PERFIL'], prefix='PERFIL')    
+        self.perfil_columns=  perfil_dummies.columns
         return self
+
+    def transform(self, x):
+        # Retornamos um novo dataframe sem as colunas indesejadas
+    
+        perfil_dummies = pd.get_dummies(x['PERFIL'], prefix='PERFIL') 
+        perfil_dummies = perfil_dummies.reindex(columns = self.perfil_columns, fill_value=0)
+        
+        x = pd.concat([x, perfil_dummies], axis=1)    
+
+        return x
