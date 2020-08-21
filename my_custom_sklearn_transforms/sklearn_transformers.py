@@ -22,6 +22,6 @@ class OneHot(BaseEstimator, TransformerMixin):
     
     def transform(self, X):
         data = X.copy()
-        data['PERFIL_DUMMY'] = data['PERFIL']
+        data.loc[:,'PERFIL_DUMMY'] = data['PERFIL']
         dum_df = pd.get_dummies(data, columns=["PERFIL_DUMMY"], prefix=['PERFIL'])# merge with main df bridge_df on key values
         return dum_df
